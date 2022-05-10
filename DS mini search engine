@@ -1,0 +1,85 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int search(FILE *file,const char *word)    // To search a word in a file
+{
+	char line[300];
+	int found=0;
+	int count=0;
+	while(!feof(file))
+	{
+		fgets(line,300,file);         // To read the content line by line in a file
+		if(strstr(line,word)!=NULL)   // To check if search word is found in line
+		{
+			printf(" %s",line);      //  To display the line
+			count++;
+			found=1;
+		}
+	}
+	if(found==1)                    // To find occurences of the word
+	{
+		printf("\n Occurences of a word is %d\n",count);
+	}
+	return found;
+	
+	fclose(file);
+}
+int main()
+{
+	char arr[50][50]={"Anti-Sikh Riots.txt","Atomic Bomb.txt","bhopal gas tragedy.txt","Britain Battle.txt",
+	"Covid.txt","Demolition.txt","Emergency.txt","Implementation.txt","india-china.txt","Indian Independance.txt",
+	"India-Pakistan.txt","jallianwala bagh massacre.txt","JFK Assassination.txt","kargil  war.txt","Liberalisation.txt",
+	"Maoist China Establishment.txt","Narendra Modi.txt","Operation Barbarossa.txt","partition of india.txt",
+	"Pearl Harbour.txt","Poland Invasion.txt","Russian Revolution.txt","Stock crash.txt","Terroist Attack.txt",                       // To store the file names
+	"The emergency.txt","Treaty.txt","UN.txt","WW1.txt","indian economic crisis.txt","bombay bombings.txt",
+	"gujarat earthquake.txt","indian parliament attack.txt","Gujarat Riots.txt","gujarat riots A.txt",
+	"indian ocean earthquake and tsunami.txt","delhi bombings.txt","mumbai attacks.txt","Mumbai.txt","north india floods.txt",
+	"india pakistan floods.txt","Cyclone.txt","Hurricane Harvey.txt","Haiti earthquake.txt","tsunami.txt","typhoon.txt",
+	"cyclone phailin.txt","odisha cyclone.txt","maharashtra floods.txt","bihar flood.txt","great bengal famine.txt"};
+	
+	int i,temp=0;
+	printf("Given Files : \n");
+	printf("-----------\n");
+	for(i=0;i<50;i++)                             // To display the file name
+	{
+		printf("%s\n",arr[i]);
+	}
+	printf("\n");
+	printf("********************************MINI  SEARCH  ENGINE*******************************\n");
+	char word[20];
+	printf("--------------------------------------------------");
+	printf("\nEnter The Word To Search :  ");
+	scanf("%s",&word);                          // To read the search word
+	printf("--------------------------------------------------");
+	printf("\n");
+	for(i=0;i<50;i++)                          // To read the file name one by one
+	{
+		FILE *file;
+	    char str[5000];
+	if(file=fopen(arr[i],"r"))                 // To open the file in read mode
+	{
+	    while(fscanf(file,"%s",str)!=EOF)      // To read the file contents 
+		{
+			if(search(file,word)==1)
+			{
+				printf("\n....................................");
+			    printf("\nFile Name : %s\n",arr[i]);
+				printf("....................................\n");		  
+			    printf("\n*************************************************************\n\n");  
+		    }
+		    else
+		    {
+		    	temp++;           // if search word not found in the file increment temp
+			}
+	    }
+	}
+	else
+	printf("No File Found");     // if file not found in the directory
+	fclose(file);
+	}
+	if(temp==10)                 // if search word not found in the given files
+	{
+		printf("NO RESULTS FOUND ");
+	}
+	return 0;
+}
